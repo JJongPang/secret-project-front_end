@@ -6,9 +6,12 @@ const API = 'https://jsonplaceholder.typicode.com/posts';
 // Do something here!
 
 // q1-2. Fetch Refactoring : 콜백함수를 사용하여 통신 영역, 템플릿 영역을 분할하여 작성하시오
+
 // 통신 상태 처리
 const checkStatusAndParse = (res) => {
     // Do something here!
+    if (!res.ok) throw new Error(`status Code Error: ${res.status}`);
+    return res.json();
 };
 
 //템플릿
@@ -25,10 +28,12 @@ const printPosts = (data) => {
 
 // HTTP 통신
 const fetchPosts = (url) => {
-    fetch(url).then((response) => response.json());
     return fetch(url);
 };
 
-const res = fetchPosts(API);
+fetchPosts(API) //
+    .then(checkStatusAndParse)
+    .then(printPosts)
+    .catch((e) => console.log(e));
 
 // Do something here!
