@@ -18,13 +18,16 @@ const navHeight = nav.getBoundingClientRect().height;
 //     }
 // });
 
+let position = 0;
 document.addEventListener('scroll', (e) => {
-    let position = 0;
     const { scrollTop } = e.target.scrollingElement;
     if (scrollTop > navHeight) {
         nav.classList.add('active');
         position = scrollTop;
-    } else if (position > scrollTop) {
+    }
+    if (scrollTop < position) {
         nav.classList.remove('active');
+        console.log('scrollTop', scrollTop);
+        console.log(position);
     }
 });
