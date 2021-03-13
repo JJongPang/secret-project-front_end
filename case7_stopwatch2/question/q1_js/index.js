@@ -1,4 +1,4 @@
-var Timer = {
+let Timer = {
     isPending: true,
     currentSec: 0,
     currentMin: 0,
@@ -7,23 +7,17 @@ var Timer = {
         // q1-1). isPending 이 false 일때만 setTimeout 을 재귀 호출하는 것을 만드세요.
         // 60초가 되면 currentSec 을 0 으로, 분을 하나 증가 시킨다.
         // 매 분초마다 시간을 html 에 적는다
-        const min = document.querySelector('#min');
-        const sec = document.querySelector('#sec');
 
-        this.isPending = false;
         if (!this.isPending) {
-            setInterval(() => {
-                this.currentSec += 1;
-                if (this.currentSec < 60) {
-                    this.currentMin += 1;
-                    this.currentSec = 0;
-                }
-            }, 1);
-        } else {
-            this.isPending = true;
+            this.currentSec += 1;
+            if (this.currentSec == 60) {
+                this.currentSec = 0;
+                this.currentMin += 1;
+            }
+            document.querySelector('#min').innerHTML = ('0' + this.currentMin).slice(-2);
+            document.querySelector('#sec').innerHTML = ('0' + this.currentSec).slice(-2);
+            setTimeout('Timer.startTimer()', 1000);
         }
-        min.textContent = this.currentMin;
-        sec.textContent = this.currentSec;
     },
 
     pauseTimer: function () {
@@ -38,7 +32,10 @@ var Timer = {
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#start').addEventListener('click', function () {
         // q1-3) 타이머 시작부분을 만든다.
-        Timer.startTimer();
+        if (Timer.isPending) {
+            Timer.isPending = false;
+            Timer.startTimer();
+        }
     });
 
     document.querySelector('#pause').addEventListener('click', function () {
