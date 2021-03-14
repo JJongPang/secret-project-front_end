@@ -12,7 +12,7 @@ const ToggleContainer = styled.div`
 const ToggleSwitch = styled.div`
     position: absolute;
     top: 2px;
-    left: 2px;
+    left: ${(props) => props.theme.toggleButtonSwitchLeft};
     /* toggle => left: 52px */
     width: 46px;
     height: 46px;
@@ -23,7 +23,7 @@ const ToggleSwitch = styled.div`
 
 const ToggleText = styled.div`
     display: flex;
-    background-color: #3dbf87;
+    background-color: ${(props) => props.theme.toggleButtonTextColor};
     border-radius: 25px;
     box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.75);
     transition: background-color 0.3s;
@@ -38,9 +38,9 @@ const ToggleIcon = styled.div`
     color: #fff;
 `;
 
-const ToggleBtn = () => {
+const ToggleBtn = ({ onClick: toggleTheme }) => {
     return (
-        <ToggleContainer>
+        <ToggleContainer onClick={toggleTheme}>
             <ToggleSwitch />
             <ToggleText>
                 <ToggleIcon>
