@@ -187,7 +187,7 @@ Pagination.prototype.getComments = function (page) {
     let limit = start + this.limit;
 
     // 게시물의 결과를 배열로 리턴합니다.
-    // 배열의 인덱스가 시작지점부터 한페이제 오여질 게시물
+    // 배열의 인덱스가 시작지점부터 한페이제 보여질 게시물
     return comments.filter(function (_, index) {
         if (index >= start && index < limit) {
             return true;
