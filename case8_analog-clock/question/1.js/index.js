@@ -18,6 +18,7 @@ const renderTime = (() => {
 
         // Write JS code here!
         // 초침 1초당 6도
+        //css 변수 접근
         $secondHand.style.setProperty('--deg', seconds * 6);
 
         // 분침 1분당 6도, 1초당  0.1도
