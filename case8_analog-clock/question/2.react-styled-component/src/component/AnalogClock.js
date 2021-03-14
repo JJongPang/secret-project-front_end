@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import useAnalogClock from '../hooks/useAnallogClock';
 
 const Container = styled.div`
     position: relative;
@@ -68,11 +68,13 @@ const Mark = styled.div`
 `;
 
 const AnalogClock = () => {
+    const [$hourHand, $minuteHand, $secondHand] = useAnalogClock();
+
     return (
         <Container>
-            <HourHand />
-            <MinuteHand />
-            <SecondHand />
+            <HourHand ref={$hourHand} />
+            <MinuteHand ref={$minuteHand} />
+            <SecondHand ref={$secondHand} />
             {Array.from({ length: 12 }, (_, i) => (
                 <Mark key={i} index={i}>
                     |
