@@ -1,5 +1,5 @@
 import { debounce } from './util';
-import { RequestMockAdapter } from './mock'; 
+import { RequestMockAdapter } from './mock';
 import { getElementIndex } from '../../solution/presenter/auto-complete/util';
 
 /*
@@ -12,7 +12,7 @@ import { getElementIndex } from '../../solution/presenter/auto-complete/util';
     },
     selector: 검색 영역을 mount할 영역,
     delayTime: 지연시간
-*/ 
+*/
 export class AutoComplete {
     constructor(configuration) {
         // 내부변수
@@ -29,17 +29,17 @@ export class AutoComplete {
         // 초기 템플릿 display, 이벤트 대상 저장
         this.textinputElement = this.displayInputElement(document.querySelector(configuration.selector), configuration);
         // 검색결과 리스트 element 생성
-        this.searchListElement = this.makeSearchListElement(document.querySelector(configuration.selector))
+        this.searchListElement = this.makeSearchListElement(document.querySelector(configuration.selector));
         // event listen
         this.eventBinding();
     }
 
     /*
-    * title: auto complete input field display method
-    * input: display 되는 element, label 없을 시 출력할 string
-    * output: text input element
-    * description: 최초 생성할 때 input element를 생성한다. 템플릿을 관리한다.
-    */
+     * title: auto complete input field display method
+     * input: display 되는 element, label 없을 시 출력할 string
+     * output: text input element
+     * description: 최초 생성할 때 input element를 생성한다. 템플릿을 관리한다.
+     */
     displayInputElement(selector, configuration) {
         const textinput = document.createElement('input');
         textinput.setAttribute('type', 'text');
@@ -51,11 +51,11 @@ export class AutoComplete {
     }
 
     /*
-    * title: search list contaier make method
-    * input: display 되는 element
-    * output: list가 출력되는 div element
-    * description: 최초 생성할 때 검색 결과를 나타내는 리스트의 container를 생성한다.
-    */
+     * title: search list contaier make method
+     * input: display 되는 element
+     * output: list가 출력되는 div element
+     * description: 최초 생성할 때 검색 결과를 나타내는 리스트의 container를 생성한다.
+     */
     makeSearchListElement(selector) {
         const listContainer = document.createElement('div');
         listContainer.classList.add('auto-complete-item-list-box');
@@ -66,14 +66,14 @@ export class AutoComplete {
     }
 
     /*
-    * title: word list display method
-    * input: display 되는 element, 표현될 데이터
-    * output: display 되는 element
-    * description: 데이터 리스트를 출력한다.
-    */
+     * title: word list display method
+     * input: display 되는 element, 표현될 데이터
+     * output: display 되는 element
+     * description: 데이터 리스트를 출력한다.
+     */
     displayWordList(selector, data) {
         if (!selector || !data.length) return;
-        
+
         selector.style.cssText = 'display: "";';
         let render = '';
         for (let i = 0; i < data.length; i++) {
@@ -81,35 +81,40 @@ export class AutoComplete {
                 <div class="auto-complete-item-box">
                     <span>${data[i]['text']}</span>
                 </div>
-            `
+            `;
         }
         // 리스트를 갱신해야하므로 innerHTML사용함.
         selector.innerHTML = render;
 
         // q1. 검색결과 리스트를 text input 하단에 출력하시오.
         // TODO: Write JS code here!'
-
-        return selector;
+        const inputReact = this.textinputElement.getBoundingClientRect();
+        selector.style.cssText = `
+            position: absolute;
+            width: ${inputReact.width}px;
+            top: ${inputReact.top + inputReact.height}px;
+            left: ${inputReact.left}px;
+        `;
+        return document.querySelectorAll('.auto-complete-item-box');
     }
 
     /*
-    * title: event binding method
-    * description: 모든 이벤트를 처리한다.
-    */
+     * title: event binding method
+     * description: 모든 이벤트를 처리한다.
+     */
     eventBinding() {
         let listOver = false;
         const requestAdapter = new RequestMockAdapter();
-
+        const dispatchEvent = debounce((targetText) => {
+            alert(targetText);
+        }, this.delayTime);
         this.textinputElement.addEventListener('keyup', (event) => {
+            dispatchEvent(event.target.value);
             // q3. debounce 기능을 통해 request 호출을 최소화 하시오.
             // TODO: debounce적용하여 리스트 출력
-            requestAdapter.get(this.requestUrl, targetText)
-                .then((result) => {
-                    this.displayWordList(
-                        this.searchListElement,
-                        result
-                    );
-                });
+            requestAdapter.get(this.requestUrl, targetText).then((result) => {
+                this.displayWordList(this.searchListElement, result);
+            });
         });
 
         // q4. 검색 필드 외에 다른 곳을 클릭할 때 출력된 리스트를 보이지 않도록 하시오.
