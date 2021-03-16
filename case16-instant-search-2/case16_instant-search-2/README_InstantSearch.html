@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Case16 : Instant Search</h2>
+    <h3>케이스 주제</h3>
+    <p>Q. 검색어를 입력하는 동시에 엔터키, 검색 버튼 누를 필요 없이 결과값을 즉시 반영할 수 있는 순간 검색 기능을 구현하십시오.</p>
+    <h3>기능 요구사항</h3>
+    <ol>
+        <li>
+            <p>키보드 이벤트를 지연시간(debounce 기능)을 통해 request 횟수를 줄인다.
+                <img src="./src/solution/presenter/instant-search/assets/instant_search_scope1.png" alt="요구사항 첫번째"></p>
+        </li>
+        <li>
+            <p>디자인 템플릿을 변경할 수 있도록 템플릿을 분리한다.</p>
+        </li>
+    </ol>
+    <h3>기능 작동 이미지</h3>
+    <p><img src="./instant-search-example.png" alt="example_image"></p>
+    <h3>실행 방법 / 문제 풀이 방법</h3>
+    <ol>
+        <li>
+            <p>npm install
+                Run <code>npm install</code></p>
+        </li>
+        <li>
+            <p>excution
+                Run <code>npm run dev</code></p>
+        </li>
+    </ol>
+    <h3>문제</h3>
+    <ul>
+        <li>
+            <p>q1. configuration을 참고하여 input element를 생성하시오. (기능과 디자인을 분리하기 위한 방법,
+                src-&gt;question-&gt;instant-search-&gt;index.js)</p>
+        </li>
+        <li>
+            <p>q2. debounce 기능을 구현하시오. (src-&gt;question-&gt;instant-search-&gt;util-&gt;index.js)</p>
+        </li>
+        <li>
+            <p>q3. debounce 기능을 통해 가져온 데이터를 외부로 전달한다. (src-&gt;question-&gt;instant-search-&gt;index.js)</p>
+        </li>
+        <li>
+            <p>q4. Promise를 사용하여 검색 키워드에 맞는 데이터를 가져와 리스트를 출력하시오.
+                (src-&gt;question-&gt;instant-search-&gt;mock-&gt;word-&gt;index.js / src-&gt;index.js)</p>
+        </li>
+    </ul>
+    <h3>주요 학습 키워드</h3>
+    <ul>
+        <li>지연시간을 적용하여 마지막 이벤트만 발생시키는 기능 (debounce)</li>
+        <li>request api를 대신하기 위한 Promise 활용 (test를 위한 mock data 활용)</li>
+        <li>디자인 부분과 기능을 분리하기 위한 방법</li>
+    </ul>
+
+</body>
+
+</html>
